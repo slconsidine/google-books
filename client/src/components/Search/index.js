@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import { Input, FormBtn } from "../Form";
+import {BookList, BookListItem} from "../BookList";
 
 class Search extends Component {
 
@@ -10,20 +11,27 @@ class Search extends Component {
     }
 
     handleInputChange = event => {
-        const { name, value } = event.target;
+        // const { name, value } = event.target;
+        let value = event.target.value;
+        let name = event.target.name;
         this.setState({
             [name]: value
         });
+        console.log("booksearch: " + this.state.bookSearch);
+        console.log("search " + this.state.search)
     };
 
-    handleFormSumbit = event => {
+    handleFormSubmit = event => {
         event.preventDefault();
+        console.log("in handle form submit");
         // API call, goes through JSON results and logs them into searchResults array
         // push searchResults away via setState to books
         // reset the bookSearch state
-        API.getBooks(this.state.search)
+
+        console.log(this.state.bookSearch);
+        let searchResults = [];
+        API.getBooks(this.state.bookSearch)
             .then(res => {
-                let searchResults = [];
                 for (var i=0; i<res.data.items.length; i++) {
                     searchResults.push(
                         { 
@@ -35,8 +43,10 @@ class Search extends Component {
                         })
                 };
             this.setState({ books: searchResults });
+            // ** this should maybe be search: ""
             this.setState({ bookSearch: "" });
         }).catch(err => console.log(err));
+        console.log(this.state.books);
     };
 
     render() {
@@ -44,22 +54,43 @@ class Search extends Component {
             <div>
                 <form>
                     <Input
-                        value={this.state.search}
-                        onChange={this.handleInputChange}
-                        name="search"
+                        name="bookSearch"
+                        handleInputChange={this.handleInputChange}
+                        value={this.state.bookSearch}
                         placeholder="Book (required)"
                     />
                     <FormBtn
-                        disabled={!(this.state.search)}
+                        disabled={!(this.state.bookSearch)}
                         onClick={this.handleFormSubmit}
                     >
                         Submit Book Search
                     </FormBtn>
                 </form>
+
+
+            <div>                
+                {this.state.books.length ? (
+                    <BookList>
+
+                        {this.state.books.map(book =>{
+                        return(
+                        <BookListItem key={book.title}>
+                            <h2>{book.title}</h2>
+                            <h3>Written By: {book.authors}</h3>
+                            <p>{book.description}</p>
+                            <a href={book.link}>Link to Google Books</a>
+                            <img src={book.image} alt={book.title}></img>
+                            </BookListItem>)}
+                        )}  
+                    </BookList>
+                ) : (
+                    <h1>Search for something</h1>
+                    )
+                    
+            }</div>
             </div>
         )
     }
-      
  };
 
  export default Search;

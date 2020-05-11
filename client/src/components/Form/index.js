@@ -5,7 +5,7 @@ import React from "react";
 export function Input(props) {
   return (
     <div className="form-group">
-      <input className="form-control" {...props} />
+      <input onChange={props.handleInputChange} value={props.value} name={props.name} type="text" id="searchInput" placeholder="Book Search" />
     </div>
   );
 }

@@ -4,7 +4,7 @@ export default {
   // Gets all books
   getBooks: function(bookSearch) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=" + bookSearch + "&key=AIzaSyD7swwbHmW0niver-5oB2VcqjOroJxeEcQ"
-    return axios.get("url");
+    return axios.get(url);
   },
   // Deletes the book with the given id
   deleteBook: function(id) {

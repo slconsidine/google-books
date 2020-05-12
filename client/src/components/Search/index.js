@@ -53,9 +53,12 @@ class Search extends Component {
 
 
     saveBook = (bookToSave) => {
+        // event.preventDefault();
+        // console.log("book to save target: " + bookToSave.target);
         console.log("current books array " + this.state.books);
         // takes all books shown on page and puts them in new variable
         let allBooks = this.state.books;
+        console.log("new books: " + allBooks);
         // grabs all the book being saved's info
         API.saveBook(bookToSave)
         .then(res => {
@@ -71,7 +74,7 @@ class Search extends Component {
         return(
             <div>
                 <NavBar />
-                <form>
+                <form onSubmit={this.handleFormSubmit}>
                     <Input
                         name="bookSearch"
                         handleInputChange={this.handleInputChange}
@@ -80,7 +83,6 @@ class Search extends Component {
                     />
                     <FormBtn
                         disabled={!(this.state.bookSearch)}
-                        onClick={this.handleFormSubmit}
                     >
                         Submit Book Search
                     </FormBtn>
@@ -100,6 +102,7 @@ class Search extends Component {
                             <a href={book.link}>Link to Google Books</a>
                             <img src={book.image} alt={book.title}></img>
                             <SaveBook onClick={() => this.saveBook(book)}/>
+                            {/* <SaveBook data-book={JSON.stringify(book)} onClick={this.saveBook(this.data-book)}/> */}
                             </BookListItem>)}
                         )}  
                     </BookList>

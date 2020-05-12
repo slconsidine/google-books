@@ -41,7 +41,7 @@ class Saved extends Component {
                 {this.state.savedBooks.length ? (
                     <BookList>
 
-                        {this.state.books.map(book =>{
+                        {this.state.savedBooks.map(book =>{
                         return(
                         <BookListItem key={book.title}>
                             <h2>{book.title}</h2>

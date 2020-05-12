@@ -21,6 +21,7 @@ export default {
         "title": bookData.title
     });
   },
+  // gets all saved books
   getSaved: function() {
       return axios.get("/api/books/")
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Input, FormBtn } from "../Form";
 import {BookList, BookListItem} from "../BookList";
+import SaveBook from "../SaveBook";
 
 class Search extends Component {
 
@@ -49,6 +50,22 @@ class Search extends Component {
         console.log(this.state.books);
     };
 
+
+    saveBook = (bookToSave) => {
+        console.log("current books array " + this.state.books);
+        // takes all books shown on page and puts them in new variable
+        let allBooks = this.state.books;
+        // grabs all the book being saved's info
+        API.saveBook(bookToSave)
+        .then(res => {
+          // goes through all the books on the page and filters out all that are NOT the book you are trying to save
+          let newBooks = allBooks.filter(book => book.id !== bookToSave.id);
+          // sets the state of the books array as all EXCEPT the saved
+          this.setState({ books: newBooks });
+        })
+        .catch(err => console.log(err));
+      };
+      
     render() {
         return(
             <div>
@@ -80,6 +97,7 @@ class Search extends Component {
                             <p>{book.description}</p>
                             <a href={book.link}>Link to Google Books</a>
                             <img src={book.image} alt={book.title}></img>
+                            <SaveBook onClick={() => this.saveBook(book)}/>
                             </BookListItem>)}
                         )}  
                     </BookList>

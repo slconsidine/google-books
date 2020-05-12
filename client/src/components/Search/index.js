@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import { Input, FormBtn } from "../Form";
 import {BookList, BookListItem} from "../BookList";
 import SaveBook from "../SaveBook";
+import NavBar from "../NavBar";
 
 class Search extends Component {
 
@@ -69,6 +70,7 @@ class Search extends Component {
     render() {
         return(
             <div>
+                <NavBar />
                 <form>
                     <Input
                         name="bookSearch"

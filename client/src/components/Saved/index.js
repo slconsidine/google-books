@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import {BookList, BookListItem} from "../BookList";
 import DeleteBook from "../DeleteBook";
+import NavBar from "../NavBar";
 
 
 class Saved extends Component {
@@ -35,6 +36,7 @@ class Saved extends Component {
     render() {
         return(
             <div>
+                <NavBar />
                  <div>                
                 {this.state.savedBooks.length ? (
                     <BookList>
